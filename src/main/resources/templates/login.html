@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/empLayout}">
+<body>
+	<div layout:fragment="content">
+	<h1 align="center" th:text="#{login}"></h1>
+    <div id="typein" align="center">
+	
+		<form method="post" action="/auth" th:object="${form}">
+			<table>
+				<tr th:inline="text" th:each="error : ${errorList}">
+					<td><!-- [[${error.defaultMessage}]] --></td>
+				</tr>
+				<tr>
+					<td>
+					<p class="text-primary" style="font-size:25px" th:text="#{userid}"></p>
+					<input type="text" class="form-control" name="accountId" value="" size="40"  
+					th:field="*{accountId}" th:placeholder="#{login.userid.placeholder}"  
+					onkeydown="eraseInfo();" id="accountId" />
+					<div class="text-danger" th:errors="*{accountId}"></div>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+				<tr>
+					<td>
+					<p class="text-primary" style="font-size:25px" th:text="#{password}"></p>
+					<input type="password" class="form-control" name="password" value="" size="40" 
+					maxlength="6" onkeydown="eraseInfo();" id="password"  th:field="*{password}"/>
+					<div class="text-danger" th:errors="*{password}"></div>
+					</td>
+				</tr>
+			</table>
+			<br/>
+            <input type="submit"  th:attr="value=#{login}" class="btn btn-primary"/><br/>
+        </form>    
+			<div id="show" style="color: red">
+			    <!-- エラーメッセージの表示 -->
+				<p th:text="${message}"></p>
+			</div>
+	</div>
+    </div>
+</body>
+
+</html>

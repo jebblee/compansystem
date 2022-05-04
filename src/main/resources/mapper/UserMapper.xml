@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace,与当前文件对应的mapper接口 -->
+<mapper namespace="com.ql.mapper.UserMapper">
+	<!-- 根据accountId查找全表 -->
+	<select id="find" parameterType="java.lang.String"
+	resultType="com.ql.bean.LoginUser">
+	SELECT * FROM loginuser WHERE accountId = #{accountId}
+	</select>
+</mapper>

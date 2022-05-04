@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ql.mapper.EmpMapper">
+	<resultMap type="com.ql.bean.EmpData"
+		id="empResultMap">
+		<id property="empCd" column="empCd" />
+		<result property="name" column="name" />
+		<result property="birthday" column="birthday" />
+		<result property="nationality.nationalityName" column="nationalityName" />
+		<result property="nationality.nationalityCd" column="nationalityCd" />
+		<result property="gender.genderCd" column="genderCd" />
+		<result property="gender.genderName" column="genderName" />
+	</resultMap>
+	<!-- 社員情報の一覧を取得-->
+	<select id="listEmp" resultMap="empResultMap">
+		SELECT e.empCd,e.name,e.birthday,n.nationalityCd,n.nationalityName,g.genderCd,g.genderName
+		FROM empData as e
+		LEFT JOIN nationality as n ON (e.nationalityCd=n.nationalityCd)
+		LEFT JOIN gender as g ON (e.genderCd=g.genderCd) ORDER BY e.empCd
+	</select>
+	
+	<!-- 社員詳細情報を検索 -->
+	<select id="searchEmp"  parameterType="String"  resultMap="empResultMap">
+		SELECT e.empCd,e.name,e.birthday,n.nationalityCd,n.nationalityName,g.genderCd,g.genderName
+		FROM empData as e
+		LEFT JOIN nationality as n ON (e.nationalityCd=n.nationalityCd)
+		LEFT JOIN gender as g ON (e.genderCd=g.genderCd)
+		WHERE concat(empCd,name,birthday,nationalityName,genderName)
+        LIKE #{0}		
+	</select>
+	
+	<!-- 社員番号で社員の詳細情報を取得 -->
+	<select id="getEmpData" parameterType="String" 	resultMap="empResultMap">
+		SELECT e.empCd,e.name,e.birthday,n.nationalityCd,n.nationalityName,g.genderCd,g.genderName
+		FROM empData as e
+		LEFT JOIN nationality as n ON (e.nationalityCd=n.nationalityCd)
+		LEFT JOIN gender as g ON (e.genderCd=g.genderCd)
+		WHERE empCd=#{0}
+	</select>
+	
+	<!-- 社員情報をデータベースに登録 -->
+	<insert id="insertEmp" parameterType="com.ql.form.EmpForm">
+	INSERT INTO
+	empData(empCd,name,birthday,nationalityCd,genderCd)
+	VALUES
+	(#{empCd},#{name},#{birthday},#{nationalityCd},#{genderCd})
+	</insert>
+	
+	<!-- 社員情報を変更 -->
+	<update id="changeEmp" parameterType="com.ql.form.EmpForm">
+		UPDATE empData
+		SET name=#{name},birthday=#{birthday},nationalityCd=#{nationalityCd},genderCd=#{genderCd}
+		WHERE empCd=#{empCd}
+	</update>
+	
+	<!-- 社員情報を削除 -->
+	<delete id="deleteEmp" parameterType="String">
+		DELETE 
+		FROM empData
+		WHERE empCd=#{0}
+	</delete>		
+</mapper>

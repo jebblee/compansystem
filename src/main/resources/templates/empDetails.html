@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/empLayout}">
+<body>
+	<div layout:fragment="content">
+		<h1 align="center" th:text=#{empDetail}></h1>
+		<div id="div1">
+			<form action="/login">
+				<input type="submit" th:value="#{logout}" class="btn btn-warning"></input>
+			</form>
+		</div>
+		<div align="center">
+			<table class="addTable">
+				<tr>
+					<td th:text="#{empCd}"></td>
+					<td><input type="text" th:value="${empData.empCd}" size="20"
+						readonly class="form-control" /></td>
+				</tr>
+				<tr>
+					<td th:text="#{empName}"></td>
+					<td><input type="text" th:value="${empData.name}" size="20"
+						readonly class="form-control" /></td>
+				</tr>
+				<tr>
+					<td th:text="#{gender}"></td>
+					<td><input type="text" th:value="${empData.gender.genderName}"
+						size="20" readonly class="form-control" /></td>
+				</tr>
+				<tr>
+					<td th:text="#{birthday}"></td>
+					<td><input type="text" th:value="${empData.birthday}"
+						size="20" readonly class="form-control" /></td>
+				</tr>
+				<tr>
+					<td th:text="#{nationality}"></td>
+					<td><input type="text"
+						th:value="${empData.nationality.nationalityName}" size="20"
+						readonly class="form-control" /></td>
+				</tr>
+			</table>
+			<br>
+			<form action="/empList">
+				<div align="center">
+					<input type="submit" class="btn btn-primary" th:value="#{back}"></input>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
